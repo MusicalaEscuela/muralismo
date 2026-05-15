@@ -1,12 +1,11 @@
-import { listenAuth } from "./services/auth.service.js";
+﻿import { listenAuth } from "./services/auth.service.js";
 import { getCourses, getCourse, getSessions, getSession, getActivities } from "./services/course.service.js";
-import { getAllSubmissions, getMySubmissions, getSubmissionsByActivity } from "./services/submission.service.js";
+import { getMySubmissions, getSubmissionsByActivity } from "./services/submission.service.js";
 import { renderAuthPage } from "./ui/auth.ui.js";
 import { renderLayout } from "./ui/layout.ui.js";
 import { dashboardTemplate, bindDashboardEvents } from "./ui/dashboard.ui.js";
 import { courseTemplate, bindCourseEvents } from "./ui/course.ui.js";
 import { sessionTemplate, bindSessionEvents } from "./ui/session.ui.js";
-import { adminTemplate, bindAdminEvents } from "./ui/admin.ui.js";
 import { getRoute, onRouteChange } from "./utils/router.js";
 import { html, showToast } from "./utils/dom.js";
 
@@ -52,11 +51,6 @@ async function renderCurrentRoute() {
 
     if (route.path === "/entregas") {
       await renderMySubmissions(route);
-      return;
-    }
-
-    if (route.path === "/admin") {
-      await renderAdmin(route);
       return;
     }
 
@@ -177,7 +171,7 @@ async function renderMySubmissions(route) {
               <p>${submission.textResponse || ""}</p>
               ${submission.feedback ? `<div class="feedback"><strong>Feedback:</strong><br>${submission.feedback}</div>` : ""}
               <div class="course-meta">
-                <span class="badge">${submission.fileUrls?.length || 0} archivos</span>
+                <span class="badge">Respuesta enviada</span>
                 ${submission.score ? `<span class="badge green">${submission.score}</span>` : ""}
               </div>
             </article>
@@ -193,30 +187,3 @@ async function renderMySubmissions(route) {
   });
 }
 
-async function renderAdmin(route) {
-  if (!["admin", "teacher"].includes(state.profile.role)) {
-    renderLayout({
-      user: state.firebaseUser,
-      profile: state.profile,
-      activePath: "/",
-      content: html`
-        <section class="empty">
-          <h3>No tienes acceso a esta sección</h3>
-          <p>Este panel es para Musicala y profes del curso.</p>
-        </section>
-      `
-    });
-    return;
-  }
-
-  const submissions = await getAllSubmissions();
-
-  renderLayout({
-    user: state.firebaseUser,
-    profile: state.profile,
-    activePath: "/admin",
-    content: adminTemplate({ submissions })
-  });
-
-  bindAdminEvents({ submissions });
-}
