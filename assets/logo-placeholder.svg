@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#7c3aed"/>
+      <stop offset=".55" stop-color="#d946ef"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+  </defs>
+  <circle cx="210" cy="210" r="188" fill="url(#g)"/>
+  <circle cx="210" cy="210" r="150" fill="#fff" opacity=".18"/>
+  <path d="M122 270c48-96 116-158 178-178-21 57-50 132-80 184-20 35-58 38-98-6Z" fill="#fff"/>
+  <path d="M154 266c36-61 82-101 125-122-20 43-44 92-68 125-17 24-40 24-57-3Z" fill="#fbf7ff"/>
+  <circle cx="171" cy="236" r="22" fill="#fbbf24"/>
+  <text x="210" y="354" fill="#fff" font-size="40" font-family="Arial, sans-serif" font-weight="800" text-anchor="middle">Musicala</text>
+</svg>
