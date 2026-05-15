@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#7c3aed" />
+  <title>Muralismo Vivo | Musicala + Miguel Ángel Ballesteros</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <div class="loading-screen">
+      <div class="loader-card">
+        <img src="./assets/logo-placeholder.svg" alt="Musicala" class="loader-logo" />
+        <h1>Muralismo Vivo</h1>
+        <p>Cargando laboratorio creativo...</p>
+      </div>
+    </div>
+  </div>
+
+  <template id="toast-template">
+    <div class="toast"></div>
+  </template>
+
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
