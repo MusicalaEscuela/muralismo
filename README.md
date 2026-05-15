@@ -2,23 +2,18 @@
 
 Plataforma web para un curso/laboratorio de muralismo desarrollado como trabajo conjunto entre **Musicala** y **Miguel Ángel Ballesteros**.
 
-La app permite crear un curso por sesiones, subir recursos, recibir entregas de estudiantes, dejar retroalimentación y construir un portafolio creativo.
+La app permite que cada estudiante ingrese, vea el curso, avance por las sesiones y envíe respuestas escritas de sus actividades. El contenido del curso vive directamente en `src/data/seed.js`; no requiere cargar ni actualizar un curso base desde un panel administrativo.
 
 ## Qué incluye
 
-- Landing interna con identidad clara del proyecto.
 - Login con Google usando Firebase Auth.
-- Roles: `admin`, `teacher`, `student`.
 - Panel de estudiante.
-- Curso base de muralismo con sesiones precargadas.
+- Curso de muralismo embebido en la app.
+- Sesiones 1 y 2 tomadas de la guía actualizada.
 - Actividades por sesión.
-- Entrega de evidencias con texto y archivos.
-- Panel de revisión para profes/admin.
-- Retroalimentación por entrega.
+- Entregas escritas guardadas en Firestore.
 - Firestore rules.
-- Storage rules.
 - Manifest PWA básico.
-- Datos semilla en `src/data/seed.js`.
 
 ## Estructura
 
@@ -29,7 +24,6 @@ muralismo-vivo-musicala/
   manifest.webmanifest
   firebase.json
   firestore.rules
-  storage.rules
   assets/
   src/
     app.js
@@ -42,7 +36,6 @@ muralismo-vivo-musicala/
       auth.service.js
       course.service.js
       submission.service.js
-      storage.service.js
       user.service.js
     ui/
       layout.ui.js
@@ -50,8 +43,6 @@ muralismo-vivo-musicala/
       dashboard.ui.js
       course.ui.js
       session.ui.js
-      admin.ui.js
-      modal.ui.js
     utils/
       dom.js
       formatters.js
@@ -64,49 +55,19 @@ muralismo-vivo-musicala/
 ## Configuración rápida
 
 1. Crea un proyecto en Firebase.
-2. Activa:
-   - Authentication > Google
-   - Firestore Database
-   - Storage
-3. Copia la configuración web de Firebase.
-4. Pégala en:
-
-```js
-src/firebase/firebase.config.js
-```
-
+2. Activa Authentication > Google.
+3. Crea Firestore Database.
+4. Copia la configuración web de Firebase en `src/firebase/firebase.config.js`.
 5. Publica las reglas:
 
 ```bash
-firebase deploy --only firestore:rules,storage
+firebase deploy --only firestore:rules
 ```
 
 6. Sube la app a Firebase Hosting o GitHub Pages.
 
-## Primer admin
-
-Por seguridad, la app crea cualquier usuario nuevo como `student`.
-
-Después del primer login, cambia el rol manualmente en Firestore:
-
-```txt
-users/{uid}/role = "admin"
-```
-
-También puedes usar:
-
-```txt
-role = "teacher"
-```
-
-## Créditos sugeridos
+## Créditos
 
 Usar este texto en la plataforma:
 
 > Un laboratorio creativo desarrollado como trabajo conjunto entre Musicala y Miguel Ángel Ballesteros.
-
-Este crédito mantiene clara la autoría conjunta entre Musicala y Miguel Ángel Ballesteros.
-
-## Nota
-
-Este proyecto está listo como MVP funcional, pero antes de producción conviene revisar roles, reglas y límites de subida según el número real de estudiantes.
