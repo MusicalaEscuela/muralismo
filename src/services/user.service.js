@@ -2,8 +2,7 @@ import {
   doc,
   getDoc,
   serverTimestamp,
-  setDoc,
-  updateDoc
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { db } from "../firebase/firebase.client.js";
 
@@ -26,12 +25,4 @@ export async function ensureUserProfile(firebaseUser) {
   }
 
   return { id: snap.id, ...snap.data() };
-}
-
-export async function updateUserRole(userId, role) {
-  const ref = doc(db, "users", userId);
-  await updateDoc(ref, {
-    role,
-    updatedAt: serverTimestamp()
-  });
 }
