@@ -1,6 +1,5 @@
-import { html, escapeHtml, fileListToArray, showToast } from "../utils/dom.js";
+﻿import { html, escapeHtml, showToast } from "../utils/dom.js";
 import { createSubmission, getSubmissionsByActivity } from "../services/submission.service.js";
-import { uploadSubmissionFile } from "../services/storage.service.js";
 import { navigate } from "../utils/router.js";
 import { formatDateTime, statusLabel } from "../utils/formatters.js";
 
@@ -9,7 +8,7 @@ export function sessionTemplate({ course, session, activities, mySubmissions }) 
     return html`
       <section class="empty">
         <h3>No encontramos esta sesión</h3>
-        <p>Revisa el curso o carga los datos base desde Revisión.</p>
+        <p>Vuelve al curso e intenta abrir una sesión disponible.</p>
       </section>
     `;
   }
@@ -88,14 +87,6 @@ function activityTemplate({ course, session, activity, mySubmissions }) {
         <textarea class="textarea" id="textResponse" name="textResponse" placeholder="Escribe aquí tu proceso, idea, explicación o reflexión..."></textarea>
       </div>
 
-      <div class="form-row">
-        <label for="files">Evidencias</label>
-        <input class="input" id="files" type="file" multiple accept="image/*,application/pdf,video/*,audio/*" />
-        <div class="file-drop" id="upload-status">
-          Puedes subir imágenes, PDF, audio o video corto. Máximo recomendado: 30MB por archivo.
-        </div>
-      </div>
-
       <button class="btn btn-primary" type="submit">
         Enviar actividad
       </button>
@@ -112,7 +103,7 @@ function activityTemplate({ course, session, activity, mySubmissions }) {
             <p>${formatDateTime(submission.createdAt)}</p>
             ${submission.feedback ? `<div class="feedback">${escapeHtml(submission.feedback)}</div>` : ""}
           </div>
-          <span class="badge">${submission.fileUrls?.length || 0} archivos</span>
+          <span class="badge">Respuesta enviada</span>
         </article>
       `).join("") : html`
         <div class="empty">
@@ -139,12 +130,10 @@ export function bindSessionEvents({ course, session, activities, user }) {
     if (!activity) return;
 
     const button = form.querySelector("button[type='submit']");
-    const status = document.querySelector("#upload-status");
-    const files = fileListToArray(document.querySelector("#files").files);
     const textResponse = document.querySelector("#textResponse").value.trim();
 
-    if (!textResponse && !files.length) {
-      showToast("Escribe algo o sube al menos una evidencia.");
+    if (!textResponse) {
+      showToast("Escribe tu respuesta antes de enviar.");
       return;
     }
 
@@ -152,21 +141,6 @@ export function bindSessionEvents({ course, session, activities, user }) {
     button.textContent = "Enviando...";
 
     try {
-      const uploadedFiles = [];
-
-      for (const file of files) {
-        status.textContent = `Subiendo ${file.name}...`;
-        const uploaded = await uploadSubmissionFile({
-          courseId: course.id,
-          studentId: user.uid,
-          file,
-          onProgress: (progress) => {
-            status.textContent = `Subiendo ${file.name}: ${progress}%`;
-          }
-        });
-        uploadedFiles.push(uploaded);
-      }
-
       await createSubmission({
         courseId: course.id,
         courseTitle: course.title,
@@ -177,8 +151,7 @@ export function bindSessionEvents({ course, session, activities, user }) {
         studentId: user.uid,
         studentName: user.displayName || user.email,
         studentEmail: user.email,
-        textResponse,
-        fileUrls: uploadedFiles
+        textResponse
       });
 
       showToast("Actividad enviada.");

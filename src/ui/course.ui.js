@@ -7,7 +7,7 @@ export function courseTemplate({ courses, selectedCourse, sessions, submissions 
     return html`
       <section class="empty">
         <h3>No hay curso disponible</h3>
-        <p>Cuando el curso base esté cargado, aparecerá aquí. Porque los cursos, tristemente, no se materializan por fe artística.</p>
+        <p>El curso no pudo cargarse desde la información local de la app.</p>
       </section>
     `;
   }

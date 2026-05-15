@@ -1,17 +1,16 @@
-import { html, setApp } from "../utils/dom.js";
+﻿import { html, setApp } from "../utils/dom.js";
 import { logout } from "../services/auth.service.js";
 import { navigate } from "../utils/router.js";
 import { roleLabel } from "../utils/formatters.js";
 
 const navItems = [
-  { path: "/", label: "Inicio", icon: "🏠", roles: ["admin", "teacher", "student"] },
-  { path: "/curso", label: "Curso", icon: "🎨", roles: ["admin", "teacher", "student"] },
-  { path: "/entregas", label: "Mis entregas", icon: "🗂️", roles: ["admin", "teacher", "student"] },
-  { path: "/admin", label: "Revisión", icon: "🧭", roles: ["admin", "teacher"] }
+  { path: "/", label: "Inicio", icon: "🏠" },
+  { path: "/curso", label: "Curso", icon: "🎨" },
+  { path: "/entregas", label: "Mis entregas", icon: "🗂️" }
 ];
 
 export function renderLayout({ user, profile, activePath, content }) {
-  const availableNav = navItems.filter((item) => item.roles.includes(profile.role));
+  const availableNav = navItems;
 
   setApp(html`
     <div class="layout">

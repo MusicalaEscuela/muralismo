@@ -62,8 +62,8 @@ export function dashboardTemplate({ courses, sessions, submissions, profile }) {
         </article>
       `).join("") : html`
         <div class="empty">
-          <h3>No hay cursos cargados todavía</h3>
-          <p>Un admin o profe puede cargar el curso base desde la sección Revisión.</p>
+          <h3>No pudimos mostrar el curso</h3>
+          <p>Revisa que la información local del curso esté disponible.</p>
         </div>
       `}
     </section>
