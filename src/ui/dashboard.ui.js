@@ -1,69 +1,74 @@
 import { html } from "../utils/dom.js";
-import { percent } from "../utils/formatters.js";
 import { navigate } from "../utils/router.js";
 
-export function dashboardTemplate({ courses, sessions, submissions, profile }) {
-  const totalSessions = sessions.length;
-  const completedActivityIds = new Set(submissions.map((item) => item.activityId));
-  const completed = Math.min(completedActivityIds.size, totalSessions);
-  const progress = percent(completed, totalSessions);
+export function dashboardTemplate({ courses, sessions }) {
+  const course = courses[0];
+  const presentation = sessions.find((session) => session.order === 0);
+  const firstSession = sessions.find((session) => session.order === 1);
 
   return html`
-    <section class="hero">
-      <div class="hero-kicker">🎨 Laboratorio creativo</div>
-      <h1>Muralismo Vivo</h1>
-      <p>
-        Del concepto al muro: una experiencia para pensar, bocetar, narrar y construir
-        propuestas murales con sentido artístico y social.
-      </p>
+    <section class="hero hero-clean">
+      <div class="hero-kicker">🎨 Taller práctico</div>
+      <h1>${course?.title || "Taller de muralismo"}</h1>
       <div class="hero-actions">
-        <button class="btn btn-secondary" id="go-course">Ver curso</button>
-        <button class="btn btn-light" id="go-submissions">Mis entregas</button>
+        ${presentation ? `<button class="btn btn-secondary" id="go-presentation" data-course="${course.id}" data-session="${presentation.id}" type="button">Presentación del taller</button>` : ""}
+        <button class="btn btn-light" id="go-course" type="button">Ver ruta del taller</button>
       </div>
-    </section>
-
-    <section class="section grid grid-3">
-      <article class="card stat-card">
-        <div class="stat-value">${totalSessions}</div>
-        <div class="stat-label">Sesiones del curso</div>
-      </article>
-      <article class="card stat-card">
-        <div class="stat-value">${submissions.length}</div>
-        <div class="stat-label">Entregas realizadas</div>
-      </article>
-      <article class="card stat-card">
-        <div class="stat-value">${progress}%</div>
-        <div class="stat-label">Avance estimado</div>
-        <div class="progress-bar" style="--progress:${progress}%"><span></span></div>
-      </article>
     </section>
 
     <section class="section">
       <div class="section-header">
         <div>
-          <h2>Curso activo</h2>
-          <p>Trabajo conjunto entre Musicala y Miguel Ángel Ballesteros.</p>
+          <h2>Empieza por aquí</h2>
+          <p>Abre la presentación y luego avanza por las sesiones en orden.</p>
         </div>
       </div>
 
-      ${courses.length ? courses.map((course) => html`
-        <article class="card course-card">
+      <div class="start-grid">
+        ${presentation ? html`
+          <article class="card start-card">
+            <div class="start-icon">★</div>
+            <h3>Presentación del taller</h3>
+            <p>Conoce el objetivo, los temas principales y los materiales que vas a necesitar.</p>
+            <button class="btn btn-primary" data-session="${presentation.id}" data-course="${course.id}" type="button">Abrir presentación</button>
+          </article>
+        ` : ""}
+
+        ${firstSession ? html`
+          <article class="card start-card">
+            <div class="start-icon">1</div>
+            <h3>Primera sesión</h3>
+            <p>Empieza con la idea central, el mensaje, los referentes y tu boceto inicial.</p>
+            <button class="btn btn-ghost" data-session="${firstSession.id}" data-course="${course.id}" type="button">Ir a sesión 1</button>
+          </article>
+        ` : ""}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2>Ruta del taller</h2>
+          <p>Revisa cada sesión, observa las imágenes de apoyo y realiza la tarea indicada.</p>
+        </div>
+      </div>
+
+      ${course ? html`
+        <article class="card course-card compact-course-card">
           <div class="course-cover"></div>
           <div>
-            <h3>${course.title}: ${course.subtitle || ""}</h3>
-            <p>${course.description || ""}</p>
+            <h3>${course.title}</h3>
             <div class="course-meta">
-              <span class="badge">🎨 ${sessions.length} sesiones</span>
-              <span class="badge blue">👤 ${course.teacherName || "Miguel Ángel Ballesteros"}</span>
+              <span class="badge blue">👤 ${course.teacherName || "Miguel Ángel Ballesteros Urrego"}</span>
               <span class="badge green">🤝 Musicala</span>
             </div>
-            <button class="btn btn-primary" data-course="${course.id}">Entrar al curso</button>
+            <button class="btn btn-primary" data-course-route="${course.id}" type="button">Ver todas las sesiones</button>
           </div>
         </article>
-      `).join("") : html`
+      ` : html`
         <div class="empty">
-          <h3>No pudimos mostrar el curso</h3>
-          <p>Revisa que la información local del curso esté disponible.</p>
+          <h3>No pudimos mostrar el taller</h3>
+          <p>Revisa que la información local esté disponible.</p>
         </div>
       `}
     </section>
@@ -72,9 +77,19 @@ export function dashboardTemplate({ courses, sessions, submissions, profile }) {
 
 export function bindDashboardEvents() {
   document.querySelector("#go-course")?.addEventListener("click", () => navigate("/curso"));
-  document.querySelector("#go-submissions")?.addEventListener("click", () => navigate("/entregas"));
 
-  document.querySelectorAll("[data-course]").forEach((button) => {
-    button.addEventListener("click", () => navigate(`/curso?courseId=${button.dataset.course}`));
+  document.querySelector("#go-presentation")?.addEventListener("click", (event) => {
+    const button = event.currentTarget;
+    navigate(`/sesion?courseId=${button.dataset.course}&sessionId=${button.dataset.session}`);
+  });
+
+  document.querySelectorAll("[data-course-route]").forEach((button) => {
+    button.addEventListener("click", () => navigate(`/curso?courseId=${button.dataset.courseRoute}`));
+  });
+
+  document.querySelectorAll("[data-session]").forEach((button) => {
+    button.addEventListener("click", () => {
+      navigate(`/sesion?courseId=${button.dataset.course}&sessionId=${button.dataset.session}`);
+    });
   });
 }

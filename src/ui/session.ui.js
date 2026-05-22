@@ -1,52 +1,129 @@
-﻿import { html, escapeHtml, showToast } from "../utils/dom.js";
-import { createSubmission, getSubmissionsByActivity } from "../services/submission.service.js";
+import { html } from "../utils/dom.js";
 import { navigate } from "../utils/router.js";
-import { formatDateTime, statusLabel } from "../utils/formatters.js";
 
-export function sessionTemplate({ course, session, activities, mySubmissions }) {
+function getSessionNavigation(sessions = [], currentSession) {
+  const ordered = [...sessions].sort((a, b) => a.order - b.order);
+  const currentIndex = ordered.findIndex((item) => item.id === currentSession?.id);
+
+  return {
+    previous: currentIndex > 0 ? ordered[currentIndex - 1] : null,
+    next: currentIndex >= 0 && currentIndex < ordered.length - 1 ? ordered[currentIndex + 1] : null
+  };
+}
+
+function materialList(course, session) {
+  if (!session.showMaterials || !course.materials?.length) return "";
+
+  return html`
+    <article class="lesson-block">
+      <div class="section-header guide-header">
+        <div>
+          <h3>Materiales</h3>
+          <p>Tenlos listos para trabajar mejor durante el taller.</p>
+        </div>
+      </div>
+      <ul class="material-list single-column-materials">
+        ${course.materials.map((material) => `<li>${material}</li>`).join("")}
+      </ul>
+    </article>
+  `;
+}
+
+function visualResources(session) {
+  if (!session.visualResources?.length) return "";
+
+  return html`
+    <article class="lesson-block">
+      <div class="section-header guide-header">
+        <div>
+          <h3>Imágenes de apoyo</h3>
+          <p>Observa estas imágenes de la guía. La explicación está escrita arriba para que puedas leerla con más claridad.</p>
+        </div>
+      </div>
+
+      <div class="visual-grid">
+        ${session.visualResources.map((resource) => html`
+          <figure class="visual-card">
+            <img src="${resource.src}" alt="${resource.alt}" loading="lazy" />
+            <figcaption>${resource.caption || resource.alt}</figcaption>
+          </figure>
+        `).join("")}
+      </div>
+    </article>
+  `;
+}
+
+export function sessionTemplate({ course, session, sessions = [] }) {
   if (!course || !session) {
     return html`
       <section class="empty">
         <h3>No encontramos esta sesión</h3>
-        <p>Vuelve al curso e intenta abrir una sesión disponible.</p>
+        <p>Vuelve a la ruta del taller e intenta abrir una sesión disponible.</p>
       </section>
     `;
   }
 
-  const activity = activities[0];
+  const navigation = getSessionNavigation(sessions, session);
 
   return html`
-    <button class="btn btn-ghost" id="back-course">← Volver al curso</button>
+    <div class="session-actions-top">
+      <button class="btn btn-ghost" id="back-course" type="button">← Volver a la ruta</button>
+      <div class="session-nav-actions">
+        ${navigation.previous ? `<button class="btn btn-ghost" data-go-session="${navigation.previous.id}" type="button">← ${navigation.previous.order === 0 ? "Presentación" : `Sesión ${navigation.previous.order}`}</button>` : ""}
+        ${navigation.next ? `<button class="btn btn-primary" data-go-session="${navigation.next.id}" type="button">${navigation.next.order === 0 ? "Presentación" : `Sesión ${navigation.next.order}`} →</button>` : ""}
+      </div>
+    </div>
 
-    <section class="section session-page">
+    <section class="section session-page session-page-wide">
       <div class="lesson-content">
-        <article class="lesson-block">
-          <span class="badge">Sesión ${session.order}</span>
+        <article class="lesson-block lesson-intro">
+          <span class="badge">${session.order === 0 ? "Inicio" : `Sesión ${session.order}`}</span>
           <h2>${session.title}</h2>
           <p>${session.summary || ""}</p>
         </article>
 
-        <article class="lesson-block">
-          ${session.videoUrl ? html`
-            <div class="video-frame">
-              <iframe src="${session.videoUrl}" allowfullscreen title="Video de la sesión"></iframe>
-            </div>
-          ` : html`
-            <div class="video-frame">
+        ${session.lessonSections?.length ? html`
+          <article class="lesson-block">
+            <div class="section-header guide-header">
               <div>
-                <h3>Video pendiente</h3>
-                <p>Aquí se podrá insertar el video de la sesión cuando el profe lo suba.</p>
+                <h3>Lee antes de trabajar</h3>
+                <p>Esta explicación te ayuda a entender qué harás en esta parte del taller.</p>
               </div>
             </div>
-          `}
-        </article>
+            <div class="lesson-section-list">
+              ${session.lessonSections.map((section) => html`
+                <div class="lesson-section-item">
+                  <h4>${section.title}</h4>
+                  <p>${section.body}</p>
+                </div>
+              `).join("")}
+            </div>
+          </article>
+        ` : ""}
 
-        <article class="lesson-block">
-          ${session.contentHtml || "<p>Contenido pendiente.</p>"}
-        </article>
+        ${materialList(course, session)}
+        ${visualResources(session)}
+
+        <div class="session-actions-bottom">
+          ${navigation.previous ? `<button class="btn btn-ghost" data-go-session="${navigation.previous.id}" type="button">← Volver a ${navigation.previous.order === 0 ? "presentación" : `sesión ${navigation.previous.order}`}</button>` : ""}
+          <button class="btn btn-ghost" id="back-course-bottom" type="button">Ver ruta del taller</button>
+          ${navigation.next ? `<button class="btn btn-primary" data-go-session="${navigation.next.id}" type="button">Ir a ${navigation.next.order === 0 ? "presentación" : `sesión ${navigation.next.order}`} →</button>` : ""}
+        </div>
+      </div>
+
+      <aside class="card activity-card task-card">
+        <h3>${session.tasksTitle || "Tu tarea"}</h3>
+        <p>${session.tasksIntro || "Realiza esto en tu proceso creativo y llévalo para revisarlo durante la clase."}</p>
+        ${session.tasks?.length ? html`
+          <ol class="task-list">
+            ${session.tasks.map((task) => `<li>${task}</li>`).join("")}
+          </ol>
+        ` : html`
+          <p>Lee el material de la sesión y sigue las instrucciones indicadas.</p>
+        `}
 
         ${session.resourceLinks?.length ? html`
-          <article class="lesson-block">
+          <div class="task-resources">
             <h3>Recursos</h3>
             <div class="resource-list">
               ${session.resourceLinks.map((resource) => html`
@@ -56,112 +133,34 @@ export function sessionTemplate({ course, session, activities, mySubmissions }) 
                 </div>
               `).join("")}
             </div>
-          </article>
+          </div>
         ` : ""}
-      </div>
 
-      <aside class="card activity-card">
-        ${activity ? activityTemplate({ course, session, activity, mySubmissions }) : html`
-          <h3>Actividad pendiente</h3>
-          <p>Esta sesión aún no tiene actividad.</p>
-        `}
+        ${course.guidePdf ? html`
+          <div class="task-resources">
+            <h3>Guía completa</h3>
+            <div class="resource-list">
+              <div class="resource-item">
+                <strong>PDF del taller</strong>
+                <a class="btn btn-ghost" href="${course.guidePdf}" target="_blank" rel="noopener">Abrir</a>
+              </div>
+            </div>
+          </div>
+        ` : ""}
       </aside>
     </section>
   `;
 }
 
-function activityTemplate({ course, session, activity, mySubmissions }) {
-  return html`
-    <h3>${activity.title}</h3>
-    <p>${activity.instructions || ""}</p>
+export function bindSessionEvents({ course }) {
+  const goCourse = () => navigate(`/curso?courseId=${course.id}`);
 
-    ${activity.rubric?.length ? html`
-      <div class="course-meta">
-        ${activity.rubric.map((item) => `<span class="badge">${item}</span>`).join("")}
-      </div>
-    ` : ""}
+  document.querySelector("#back-course")?.addEventListener("click", goCourse);
+  document.querySelector("#back-course-bottom")?.addEventListener("click", goCourse);
 
-    <form class="form" id="submission-form">
-      <div class="form-row">
-        <label for="textResponse">Respuesta o reflexión</label>
-        <textarea class="textarea" id="textResponse" name="textResponse" placeholder="Escribe aquí tu proceso, idea, explicación o reflexión..."></textarea>
-      </div>
-
-      <button class="btn btn-primary" type="submit">
-        Enviar actividad
-      </button>
-    </form>
-
-    <hr style="border:0;border-top:1px solid var(--border);margin:20px 0;" />
-
-    <h3>Mis envíos</h3>
-    <div class="submission-list">
-      ${mySubmissions.length ? mySubmissions.map((submission) => html`
-        <article class="submission-item">
-          <div>
-            <strong>${statusLabel(submission.status)}</strong>
-            <p>${formatDateTime(submission.createdAt)}</p>
-            ${submission.feedback ? `<div class="feedback">${escapeHtml(submission.feedback)}</div>` : ""}
-          </div>
-          <span class="badge">Respuesta enviada</span>
-        </article>
-      `).join("") : html`
-        <div class="empty">
-          <h3>Aún no has enviado esta actividad</h3>
-          <p>Tranquilo, el muro no se va a pintar solo. Bueno, ojalá.</p>
-        </div>
-      `}
-    </div>
-  `;
-}
-
-export function bindSessionEvents({ course, session, activities, user }) {
-  document.querySelector("#back-course")?.addEventListener("click", () => {
-    navigate(`/curso?courseId=${course.id}`);
-  });
-
-  const form = document.querySelector("#submission-form");
-  if (!form) return;
-
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const activity = activities[0];
-    if (!activity) return;
-
-    const button = form.querySelector("button[type='submit']");
-    const textResponse = document.querySelector("#textResponse").value.trim();
-
-    if (!textResponse) {
-      showToast("Escribe tu respuesta antes de enviar.");
-      return;
-    }
-
-    button.disabled = true;
-    button.textContent = "Enviando...";
-
-    try {
-      await createSubmission({
-        courseId: course.id,
-        courseTitle: course.title,
-        sessionId: session.id,
-        sessionTitle: session.title,
-        activityId: activity.id,
-        activityTitle: activity.title,
-        studentId: user.uid,
-        studentName: user.displayName || user.email,
-        studentEmail: user.email,
-        textResponse
-      });
-
-      showToast("Actividad enviada.");
-      navigate(`/sesion?courseId=${course.id}&sessionId=${session.id}&refresh=${Date.now()}`);
-    } catch (error) {
-      console.error(error);
-      showToast("No se pudo enviar la actividad.");
-    } finally {
-      button.disabled = false;
-      button.textContent = "Enviar actividad";
-    }
+  document.querySelectorAll("[data-go-session]").forEach((button) => {
+    button.addEventListener("click", () => {
+      navigate(`/sesion?courseId=${course.id}&sessionId=${button.dataset.goSession}`);
+    });
   });
 }

@@ -6,23 +6,22 @@ export function renderAuthPage() {
   setApp(html`
     <main class="auth-page">
       <section class="auth-visual">
-        <div class="hero-kicker">🎨 Musicala + Miguel Ángel Ballesteros</div>
-        <h1>Muralismo Vivo</h1>
+        <div class="hero-kicker">🎨 Musicala + Miguel Ángel Ballesteros Urrego</div>
+        <h1>Taller de muralismo</h1>
         <p>
-          Un laboratorio creativo para transformar ideas, símbolos, memoria y territorio
-          en propuestas murales con narrativa visual.
+          Vas a recorrer una guía práctica para crear un mural: idea, mensaje, referentes, boceto, composición, color, materiales, retícula y pintura final.
         </p>
         <p>
-          Este proyecto se desarrolla como trabajo conjunto entre Musicala y Miguel Ángel Ballesteros.
+          Entra para ver las sesiones, revisar el material visual del curso y seguir las actividades indicadas.
         </p>
       </section>
 
       <section class="auth-card">
         <div class="auth-card-inner card">
           <img src="./assets/logo-placeholder.svg" alt="Musicala" />
-          <h2>Ingresar al curso</h2>
+          <h2>Ingresar al taller</h2>
           <p>
-            Entra con tu cuenta de Google para ver sesiones, entregar actividades y construir tu portafolio creativo.
+            Usa tu cuenta de Google para entrar al Taller de muralismo.
           </p>
           <button class="btn btn-primary" id="login-btn">Ingresar con Google</button>
         </div>
