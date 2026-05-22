@@ -10,8 +10,8 @@ export const firebaseConfig = {
 };
 
 export const appSettings = {
-  appName: "Muralismo Vivo",
+  appName: "Taller de muralismo",
   organizationName: "Musicala",
-  partnerName: "Miguel Ángel Ballesteros",
-  credits: "Un laboratorio creativo desarrollado como trabajo conjunto entre Musicala y Miguel Ángel Ballesteros."
+  partnerName: "Miguel Ángel Ballesteros Urrego",
+  credits: "Un taller creativo desarrollado como trabajo conjunto entre Musicala y Miguel Ángel Ballesteros Urrego."
 };
