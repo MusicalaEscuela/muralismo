@@ -1,36 +1,11 @@
 # Estructura Firestore
 
-El contenido del curso no se guarda en Firestore. Las sesiones y actividades viven directamente en `src/data/seed.js`.
+La app puede funcionar con datos locales desde `src/data/seed.js`. Si se conecta a Firebase, la estructura sugerida es:
 
-## users
-
-```txt
-users/{uid}
-  name: string
-  email: string
-  photoURL: string
-  role: "student"
-  createdAt: timestamp
-  updatedAt: timestamp
+```text
+courses/{courseId}
+sessions/{sessionId}
+users/{userId}
 ```
 
-## submissions
-
-```txt
-submissions/{submissionId}
-  courseId: string
-  courseTitle: string
-  sessionId: string
-  sessionTitle: string
-  activityId: string
-  activityTitle: string
-  studentId: string
-  studentName: string
-  studentEmail: string
-  textResponse: string
-  status: "submitted" | "reviewed"
-  feedback: string
-  score: string
-  createdAt: timestamp
-  updatedAt: timestamp
-```
+En esta versión no hay colección de entregas porque la plataforma quedó enfocada en consultar la guía, revisar imágenes y trabajar las actividades durante clase.
