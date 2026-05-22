@@ -2,6 +2,11 @@
 import { html } from "../utils/dom.js";
 import { navigate } from "../utils/router.js";
 
+function sameResourceUrl(left = "", right = "") {
+  const clean = (value = "") => String(value).replace(/^\.\//, "");
+  return clean(left) === clean(right);
+}
+
 function getSessionNavigation(sessions = [], currentSession) {
   const ordered = [...sessions].sort((a, b) => a.order - b.order);
   const currentIndex = ordered.findIndex((item) => item.id === currentSession?.id);
@@ -108,6 +113,10 @@ export function sessionTemplate({ course, session, sessions = [] }) {
   }
 
   const navigation = getSessionNavigation(sessions, session);
+  const guideAlreadyListed = Boolean(
+    course.guidePdf &&
+    session.resourceLinks?.some((resource) => sameResourceUrl(resource.url, course.guidePdf))
+  );
 
   return html`
     <div class="session-actions-top">
@@ -181,7 +190,7 @@ export function sessionTemplate({ course, session, sessions = [] }) {
           </div>
         ` : ""}
 
-        ${course.guidePdf ? html`
+        ${course.guidePdf && !guideAlreadyListed ? html`
           <div class="task-resources">
             <h3>Guía completa</h3>
             <div class="resource-list">
