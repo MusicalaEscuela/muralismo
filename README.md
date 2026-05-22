@@ -1,73 +1,39 @@
-# Muralismo Vivo
+# Taller de muralismo
 
-Plataforma web para un curso/laboratorio de muralismo desarrollado como trabajo conjunto entre **Musicala** y **Miguel Ángel Ballesteros**.
+Aplicación web para estudiantes del curso **Taller de muralismo**, desarrollado por Musicala junto a Miguel Ángel Ballesteros Urrego.
 
-La app permite que cada estudiante ingrese, vea el curso, avance por las sesiones y envíe respuestas escritas de sus actividades. El contenido del curso vive directamente en `src/data/seed.js`; no requiere cargar ni actualizar un curso base desde un panel administrativo.
+La app está pensada para que los estudiantes avancen por sesiones, revisen el material visual del curso y realicen las actividades indicadas. No incluye módulo de entregas, botón de enviar actividad, espacio de reflexión ni sección de mis envíos.
 
-## Qué incluye
+## Contenido
 
-- Login con Google usando Firebase Auth.
-- Panel de estudiante.
-- Curso de muralismo embebido en la app.
-- Sesiones 1 y 2 tomadas de la guía actualizada.
-- Actividades por sesión.
-- Entregas escritas guardadas en Firestore.
-- Firestore rules.
-- Manifest PWA básico.
+- Presentación del curso.
+- Ruta de 6 sesiones de muralismo.
+- Material visual tomado de la guía en `assets/guia/`.
+- PDF completo disponible para consulta.
+- Actividades por sesión con lenguaje para estudiantes.
+- Apartado de preparación de superficie en la sesión 4.
+- Navegación entre sesiones.
 
-## Estructura
+## Uso local
 
-```txt
-muralismo-vivo-musicala/
-  index.html
-  styles.css
-  manifest.webmanifest
-  firebase.json
-  firestore.rules
-  assets/
-  src/
-    app.js
-    firebase/
-      firebase.config.js
-      firebase.client.js
-    data/
-      seed.js
-    services/
-      auth.service.js
-      course.service.js
-      submission.service.js
-      user.service.js
-    ui/
-      layout.ui.js
-      auth.ui.js
-      dashboard.ui.js
-      course.ui.js
-      session.ui.js
-    utils/
-      dom.js
-      formatters.js
-      router.js
-  docs/
-    IMPLEMENTACION.md
-    ESTRUCTURA_FIRESTORE.md
-```
-
-## Configuración rápida
-
-1. Crea un proyecto en Firebase.
-2. Activa Authentication > Google.
-3. Crea Firestore Database.
-4. Copia la configuración web de Firebase en `src/firebase/firebase.config.js`.
-5. Publica las reglas:
+Abre `index.html` con un servidor local. Por ejemplo:
 
 ```bash
-firebase deploy --only firestore:rules
+python -m http.server 5500
 ```
 
-6. Sube la app a Firebase Hosting o GitHub Pages.
+Luego entra a:
 
-## Créditos
+```text
+http://localhost:5500
+```
 
-Usar este texto en la plataforma:
+## Configuración
 
-> Un laboratorio creativo desarrollado como trabajo conjunto entre Musicala y Miguel Ángel Ballesteros.
+La configuración de Firebase está en:
+
+```text
+src/firebase/firebase.config.js
+```
+
+Ajusta esos valores si el proyecto se conecta a otro Firebase.
