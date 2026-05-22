@@ -1,6 +1,5 @@
-﻿import { listenAuth } from "./services/auth.service.js";
-import { getCourses, getCourse, getSessions, getSession, getActivities } from "./services/course.service.js";
-import { getMySubmissions, getSubmissionsByActivity } from "./services/submission.service.js";
+import { listenAuth } from "./services/auth.service.js";
+import { getCourses, getCourse, getSessions, getSession } from "./services/course.service.js";
 import { renderAuthPage } from "./ui/auth.ui.js";
 import { renderLayout } from "./ui/layout.ui.js";
 import { dashboardTemplate, bindDashboardEvents } from "./ui/dashboard.ui.js";
@@ -35,7 +34,7 @@ async function renderCurrentRoute() {
 
   try {
     if (route.path === "/") {
-      await renderDashboard(route);
+      await renderDashboard();
       return;
     }
 
@@ -49,23 +48,18 @@ async function renderCurrentRoute() {
       return;
     }
 
-    if (route.path === "/entregas") {
-      await renderMySubmissions(route);
-      return;
-    }
-
-    await renderDashboard(route);
+    await renderDashboard();
   } catch (error) {
     console.error(error);
-    showToast("Algo falló cargando la información.");
+    showToast("Algo falló cargando la guía.");
     renderLayout({
       user: state.firebaseUser,
       profile: state.profile,
       activePath: route.path,
       content: html`
         <section class="empty">
-          <h3>No se pudo cargar esta sección</h3>
-          <p>Revisa la configuración de Firebase, reglas o conexión.</p>
+          <h3>No se pudo cargar esta parte de la guía</h3>
+          <p>Revisa la configuración de Firebase o la conexión.</p>
         </section>
       `
     });
@@ -76,14 +70,11 @@ async function loadBaseData() {
   const courses = await getCourses();
   const selectedCourse = courses[0] || null;
   const sessions = selectedCourse ? await getSessions(selectedCourse.id) : [];
-  const submissions = state.firebaseUser
-    ? await getMySubmissions(state.firebaseUser.uid, selectedCourse?.id || null)
-    : [];
 
-  return { courses, selectedCourse, sessions, submissions };
+  return { courses, selectedCourse, sessions };
 }
 
-async function renderDashboard(route) {
+async function renderDashboard() {
   const data = await loadBaseData();
 
   renderLayout({
@@ -101,15 +92,12 @@ async function renderCourse(route) {
   const courses = await getCourses();
   const selectedCourse = courseId ? await getCourse(courseId) : courses[0];
   const sessions = selectedCourse ? await getSessions(selectedCourse.id) : [];
-  const submissions = selectedCourse
-    ? await getMySubmissions(state.firebaseUser.uid, selectedCourse.id)
-    : [];
 
   renderLayout({
     user: state.firebaseUser,
     profile: state.profile,
     activePath: "/curso",
-    content: courseTemplate({ courses, selectedCourse, sessions, submissions })
+    content: courseTemplate({ courses, selectedCourse, sessions })
   });
 
   bindCourseEvents();
@@ -121,69 +109,14 @@ async function renderSession(route) {
 
   const course = courseId ? await getCourse(courseId) : null;
   const session = courseId && sessionId ? await getSession(courseId, sessionId) : null;
-  const activities = courseId && sessionId ? await getActivities(courseId, sessionId) : [];
-  const mySubmissions = activities[0]
-    ? await getSubmissionsByActivity(activities[0].id, state.firebaseUser.uid)
-    : [];
+  const sessions = courseId ? await getSessions(courseId) : [];
 
   renderLayout({
     user: state.firebaseUser,
     profile: state.profile,
     activePath: "/curso",
-    content: sessionTemplate({ course, session, activities, mySubmissions })
+    content: sessionTemplate({ course, session, sessions })
   });
 
-  bindSessionEvents({
-    course,
-    session,
-    activities,
-    user: state.firebaseUser
-  });
+  bindSessionEvents({ course });
 }
-
-async function renderMySubmissions(route) {
-  const submissions = await getMySubmissions(state.firebaseUser.uid);
-
-  renderLayout({
-    user: state.firebaseUser,
-    profile: state.profile,
-    activePath: "/entregas",
-    content: html`
-      <section class="hero">
-        <div class="hero-kicker">🗂️ Portafolio creativo</div>
-        <h1>Mis entregas</h1>
-        <p>Aquí se va construyendo el registro de tu proceso: ideas, referentes, bocetos, evidencias y reflexiones.</p>
-      </section>
-
-      <section class="section">
-        <div class="submission-list">
-          ${submissions.length ? submissions.map((submission) => html`
-            <article class="card">
-              <div class="section-header">
-                <div>
-                  <h3>${submission.activityTitle || "Actividad"}</h3>
-                  <p>${submission.sessionTitle || ""}</p>
-                </div>
-                <span class="badge ${submission.status === "reviewed" ? "green" : "amber"}">
-                  ${submission.status === "reviewed" ? "Revisado" : "Enviado"}
-                </span>
-              </div>
-              <p>${submission.textResponse || ""}</p>
-              ${submission.feedback ? `<div class="feedback"><strong>Feedback:</strong><br>${submission.feedback}</div>` : ""}
-              <div class="course-meta">
-                <span class="badge">Respuesta enviada</span>
-                ${submission.score ? `<span class="badge green">${submission.score}</span>` : ""}
-              </div>
-            </article>
-          `).join("") : html`
-            <div class="empty">
-              <h3>No tienes entregas todavía</h3>
-              <p>Cuando envíes actividades, aparecerán aquí como portafolio.</p>
-            </div>
-          `}
-        </div>
-      </section>
-    `
-  });
-}
-
