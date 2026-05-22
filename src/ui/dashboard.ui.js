@@ -1,3 +1,4 @@
+
 import { html } from "../utils/dom.js";
 import { navigate } from "../utils/router.js";
 
@@ -55,7 +56,10 @@ export function dashboardTemplate({ courses, sessions }) {
 
       ${course ? html`
         <article class="card course-card compact-course-card">
-          <div class="course-cover"></div>
+          <div class="course-cover course-cover--tile" aria-hidden="true">
+            <span class="course-cover-icon">🎨</span>
+            <span class="course-cover-accent"></span>
+          </div>
           <div>
             <h3>${course.title}</h3>
             <div class="course-meta">

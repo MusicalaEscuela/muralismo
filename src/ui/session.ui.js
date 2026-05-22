@@ -1,3 +1,4 @@
+
 import { html } from "../utils/dom.js";
 import { navigate } from "../utils/router.js";
 
@@ -43,12 +44,55 @@ function visualResources(session) {
 
       <div class="visual-grid">
         ${session.visualResources.map((resource) => html`
-          <figure class="visual-card">
+          <figure class="visual-card ${resource.layout === "wide" ? "visual-card-wide" : ""}">
             <img src="${resource.src}" alt="${resource.alt}" loading="lazy" />
             <figcaption>${resource.caption || resource.alt}</figcaption>
           </figure>
         `).join("")}
       </div>
+    </article>
+  `;
+}
+
+function finalDeliveryBlock(session) {
+  if (!session.finalDelivery) return "";
+
+  return html`
+    <article class="lesson-block final-delivery-block">
+      <div class="section-header guide-header">
+        <div>
+          <h3>Espacio para tu producto final</h3>
+          <p>Aquí puedes dejar la imagen de tu mural terminado y una nota corta sobre tu proceso.</p>
+        </div>
+      </div>
+
+      <form class="final-delivery-form" id="final-delivery-form">
+        <div class="form-row">
+          <label for="final-delivery-title">Nombre de la entrega</label>
+          <input class="input" id="final-delivery-title" name="title" type="text" placeholder="Producto final del mural" />
+        </div>
+
+        <div class="form-row">
+          <label for="final-delivery-note">Comentario del estudiante</label>
+          <textarea class="textarea" id="final-delivery-note" name="note" placeholder="Puedes contar qué idea desarrollaste, qué aprendiste o cómo te sentiste durante el proceso."></textarea>
+        </div>
+
+        <div class="form-row">
+          <label for="final-delivery-image">Imagen del mural final</label>
+          <input class="input" id="final-delivery-image" name="image" type="file" accept="image/*" />
+          <div class="file-drop">Sube una foto clara de tu mural terminado. Este espacio está pensado solo para la entrega final.</div>
+        </div>
+
+        <div class="final-delivery-preview is-empty" id="final-delivery-preview">
+          <div class="final-delivery-preview-empty">Todavía no has cargado una imagen del producto final.</div>
+          <img id="final-delivery-preview-image" alt="Vista previa del producto final" hidden />
+        </div>
+
+        <div class="final-delivery-actions">
+          <button class="btn btn-primary" type="submit">Guardar entrega</button>
+          <button class="btn btn-ghost" type="button" id="final-delivery-clear">Quitar imagen</button>
+        </div>
+      </form>
     </article>
   `;
 }
@@ -70,14 +114,14 @@ export function sessionTemplate({ course, session, sessions = [] }) {
       <button class="btn btn-ghost" id="back-course" type="button">← Volver a la ruta</button>
       <div class="session-nav-actions">
         ${navigation.previous ? `<button class="btn btn-ghost" data-go-session="${navigation.previous.id}" type="button">← ${navigation.previous.order === 0 ? "Presentación" : `Sesión ${navigation.previous.order}`}</button>` : ""}
-        ${navigation.next ? `<button class="btn btn-primary" data-go-session="${navigation.next.id}" type="button">${navigation.next.order === 0 ? "Presentación" : `Sesión ${navigation.next.order}`} →</button>` : ""}
+        ${navigation.next ? `<button class="btn btn-primary" data-go-session="${navigation.next.id}" type="button">${navigation.next.order === 0 ? "Presentación" : navigation.next.finalDelivery ? "Entrega final" : `Sesión ${navigation.next.order}`} →</button>` : ""}
       </div>
     </div>
 
     <section class="section session-page session-page-wide">
       <div class="lesson-content">
         <article class="lesson-block lesson-intro">
-          <span class="badge">${session.order === 0 ? "Inicio" : `Sesión ${session.order}`}</span>
+          <span class="badge">${session.order === 0 ? "Inicio" : session.finalDelivery ? "Cierre" : `Sesión ${session.order}`}</span>
           <h2>${session.title}</h2>
           <p>${session.summary || ""}</p>
         </article>
@@ -103,11 +147,12 @@ export function sessionTemplate({ course, session, sessions = [] }) {
 
         ${materialList(course, session)}
         ${visualResources(session)}
+        ${finalDeliveryBlock(session)}
 
         <div class="session-actions-bottom">
-          ${navigation.previous ? `<button class="btn btn-ghost" data-go-session="${navigation.previous.id}" type="button">← Volver a ${navigation.previous.order === 0 ? "presentación" : `sesión ${navigation.previous.order}`}</button>` : ""}
+          ${navigation.previous ? `<button class="btn btn-ghost" data-go-session="${navigation.previous.id}" type="button">← Volver a ${navigation.previous.order === 0 ? "presentación" : navigation.previous.finalDelivery ? "entrega final" : `sesión ${navigation.previous.order}`}</button>` : ""}
           <button class="btn btn-ghost" id="back-course-bottom" type="button">Ver ruta del taller</button>
-          ${navigation.next ? `<button class="btn btn-primary" data-go-session="${navigation.next.id}" type="button">Ir a ${navigation.next.order === 0 ? "presentación" : `sesión ${navigation.next.order}`} →</button>` : ""}
+          ${navigation.next ? `<button class="btn btn-primary" data-go-session="${navigation.next.id}" type="button">Ir a ${navigation.next.order === 0 ? "presentación" : navigation.next.finalDelivery ? "entrega final" : `sesión ${navigation.next.order}`} →</button>` : ""}
         </div>
       </div>
 
@@ -152,7 +197,7 @@ export function sessionTemplate({ course, session, sessions = [] }) {
   `;
 }
 
-export function bindSessionEvents({ course }) {
+export function bindSessionEvents({ course, session }) {
   const goCourse = () => navigate(`/curso?courseId=${course.id}`);
 
   document.querySelector("#back-course")?.addEventListener("click", goCourse);
@@ -162,5 +207,77 @@ export function bindSessionEvents({ course }) {
     button.addEventListener("click", () => {
       navigate(`/sesion?courseId=${course.id}&sessionId=${button.dataset.goSession}`);
     });
+  });
+
+  if (session?.finalDelivery) {
+    setupFinalDeliveryForm(course, session);
+  }
+}
+
+function setupFinalDeliveryForm(course, session) {
+  const form = document.querySelector("#final-delivery-form");
+  if (!form) return;
+
+  const titleInput = document.querySelector("#final-delivery-title");
+  const noteInput = document.querySelector("#final-delivery-note");
+  const imageInput = document.querySelector("#final-delivery-image");
+  const preview = document.querySelector("#final-delivery-preview");
+  const previewImage = document.querySelector("#final-delivery-preview-image");
+  const clearButton = document.querySelector("#final-delivery-clear");
+  const storageKey = `muralismo-final-delivery:${course.id}:${session.id}`;
+
+  let savedImage = "";
+
+  const renderPreview = (src) => {
+    savedImage = src || "";
+    if (src) {
+      preview?.classList.remove("is-empty");
+      previewImage.src = src;
+      previewImage.hidden = false;
+    } else {
+      preview?.classList.add("is-empty");
+      previewImage.removeAttribute("src");
+      previewImage.hidden = true;
+    }
+  };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (saved) {
+      titleInput.value = saved.title || "Producto final del mural";
+      noteInput.value = saved.note || "";
+      renderPreview(saved.image || "");
+    } else {
+      titleInput.value = "Producto final del mural";
+      renderPreview("");
+    }
+  } catch (error) {
+    titleInput.value = "Producto final del mural";
+    renderPreview("");
+  }
+
+  imageInput?.addEventListener("change", () => {
+    const file = imageInput.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => renderPreview(String(reader.result || ""));
+    reader.readAsDataURL(file);
+  });
+
+  clearButton?.addEventListener("click", () => {
+    imageInput.value = "";
+    renderPreview("");
+  });
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const payload = {
+      title: titleInput.value?.trim() || "Producto final del mural",
+      note: noteInput.value?.trim() || "",
+      image: savedImage || ""
+    };
+
+    localStorage.setItem(storageKey, JSON.stringify(payload));
+    window.alert("Tu entrega final quedó guardada en este dispositivo.");
   });
 }
