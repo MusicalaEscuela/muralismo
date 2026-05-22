@@ -1323,3 +1323,125 @@ img {
     max-height: 340px;
   }
 }
+
+
+.course-cover--tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(251, 191, 36, 0.95) 0 11%, transparent 12%),
+    linear-gradient(180deg, rgba(255,255,255,0.92) 0 58%, rgba(124, 58, 237, 0.18) 58% 100%),
+    linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(217, 70, 239, 0.20), rgba(56, 189, 248, 0.16));
+}
+
+.course-cover--tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(transparent 0 62%, rgba(124, 58, 237, 0.10) 62% 100%),
+    repeating-linear-gradient(0deg, transparent 0 30px, rgba(124, 58, 237, 0.08) 30px 32px),
+    repeating-linear-gradient(90deg, transparent 0 30px, rgba(124, 58, 237, 0.08) 30px 32px);
+  opacity: 0.95;
+}
+
+.course-cover-icon {
+  position: relative;
+  z-index: 1;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.88);
+  box-shadow: 0 12px 24px rgba(124, 58, 237, 0.18);
+  font-size: 1.8rem;
+}
+
+.course-cover-accent {
+  position: absolute;
+  inset: auto 20px 16px auto;
+  width: 92px;
+  height: 92px;
+  border-radius: 24px 24px 0 24px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.90), rgba(217, 70, 239, 0.80), rgba(56, 189, 248, 0.74));
+  filter: blur(1px);
+}
+
+.final-delivery-block {
+  display: grid;
+  gap: 18px;
+}
+
+.final-delivery-form {
+  display: grid;
+  gap: 16px;
+}
+
+.final-delivery-preview {
+  border: 1px dashed rgba(124, 58, 237, 0.30);
+  border-radius: 22px;
+  min-height: 240px;
+  padding: 16px;
+  display: grid;
+  place-items: center;
+  background: rgba(124, 58, 237, 0.04);
+  overflow: hidden;
+}
+
+.final-delivery-preview.is-empty {
+  color: var(--muted);
+  text-align: center;
+}
+
+.final-delivery-preview img {
+  max-height: 420px;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 16px;
+  background: white;
+}
+
+.final-delivery-preview-empty {
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.final-delivery-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .final-delivery-actions {
+    flex-direction: column;
+  }
+
+  .final-delivery-actions .btn {
+    width: 100%;
+  }
+}
+
+.visual-card-wide {
+  grid-column: 1 / -1;
+}
+
+.visual-card-wide img {
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  padding: 8px;
+}
+
+.visual-card-wide figcaption {
+  font-size: 0.92rem;
+}
+
+@media (max-width: 600px) {
+  .visual-card-wide img {
+    max-height: none;
+  }
+}
