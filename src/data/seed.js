@@ -1,136 +1,471 @@
 export const muralismoCourseSeed = {
-  id: "muralismo-vivo",
-  title: "Muralismo Vivo",
-  subtitle: "Del concepto al muro",
-  description:
-    "Laboratorio creativo para convertir ideas, emociones y problemáticas del entorno en una propuesta mural con narrativa visual, referentes, bocetación, composición y reflexión artística.",
-  credits:
-    "Un laboratorio creativo desarrollado como trabajo conjunto entre Musicala y Miguel Ángel Ballesteros.",
-  teacherName: "Miguel Ángel Ballesteros",
-  partnerName: "Musicala",
-  status: "published",
-  coverImage: "./assets/course-cover.svg",
-  sessions: [
+  "id": "muralismo-vivo",
+  "title": "Taller de muralismo",
+  "subtitle": "Del concepto al muro",
+  "description": "Un taller práctico para crear un mural desde la idea inicial hasta la pintura final en la pared.",
+  "studentOverview": [
+    "En este taller vas a recorrer, paso a paso, el proceso creativo y técnico necesario para diseñar y realizar una obra mural colectiva.",
+    "No necesitas experiencia previa. La idea es que explores tu creatividad mientras desarrollas habilidades artísticas, técnicas y de trabajo colaborativo.",
+    "Durante el proceso trabajarás composición visual, teoría del color, perspectiva, materiales, preparación de superficie y técnicas de intervención en gran formato."
+  ],
+  "learningTopics": [
+    "Conceptualización y narrativa del mural",
+    "Composición visual y organización del espacio",
+    "Teoría del color aplicada al mural",
+    "Técnicas, materiales y preparación de superficie",
+    "Intervención del espacio y transferencia del boceto",
+    "Pintura final, capas, correcciones y cierre del mural"
+  ],
+  "credits": "Taller desarrollado por Musicala junto a Miguel Ángel Ballesteros Urrego.",
+  "teacherName": "Miguel Ángel Ballesteros Urrego",
+  "partnerName": "Musicala",
+  "status": "published",
+  "coverImage": "./assets/course-cover.svg",
+  "guidePdf": "./assets/guia/guia-muralismo.pdf",
+  "materials": [
+    "1 pared o superficie pintada de blanco",
+    "Brochas, rodillos y pinceles",
+    "Pinturas acrílicas o aerosoles",
+    "Cinta de enmascarar delgada",
+    "Hojas blancas tamaño carta",
+    "Lápices 2H y 2B",
+    "Lápices de colores",
+    "Regla",
+    "Metro de costura",
+    "Ropa de trabajo"
+  ],
+  "sessions": [
     {
-      id: "sesion-01-conceptualizacion-narrativa",
-      order: 1,
-      title: "Conceptualización y narrativa del mural",
-      summary:
-        "Construye la idea general del mural, su intención artística, mensaje, temática, narrativa visual, referentes y bocetación inicial.",
-      duration: "120 min",
-      isPublished: true,
-      videoUrl: "",
-      resourceLinks: [
+      "id": "bienvenida-guia-general",
+      "order": 0,
+      "title": "Presentación del taller",
+      "summary": "Conoce el objetivo del taller, los temas que vas a trabajar y los materiales que necesitas preparar.",
+      "duration": "Inicio",
+      "isPublished": true,
+      "visualResources": [
         {
-          label: "Gran formato / muralismo en Colombia",
-          url: "https://www.dmentalgraffitishop.com/gran-formato/"
-        },
-        {
-          label: "Recurso mensaje y temática",
-          url: "https://acortar.link/9j1P6c"
-        },
-        {
-          label: "Tour de graffiti por Bogotá",
-          url: "https://www.bogotraveltours.com/es/bogota/bogota-graffiti-tour-en-bicicleta/"
-        },
-        {
-          label: "El graffiti en Bogotá",
-          url: "https://culturarecreacionydeporte.gov.co/es/principal/noticias/el-grafiti-en-bogota-2024"
-        },
-        {
-          label: "Murales de Banksy en Londres",
-          url: "https://www.myartbroker.com/artist-banksy/guides/londons-top-12-banksy-murals"
+          "src": "./assets/guia/imagenes/presentacion-mural.jpg",
+          "alt": "Ejemplo de mural colorido usado como referencia inicial del taller.",
+          "caption": "Ejemplo de mural colorido usado como referencia inicial del taller."
         }
       ],
-      contentHtml: `
-        <h2>Conceptualización y narrativa del mural</h2>
-        <p>La conceptualización del mural consiste en construir la idea general que dará sentido a toda la obra. En esta etapa se define qué se quiere comunicar, cuál será la intención artística y cómo se desarrollará visualmente la narrativa.</p>
-        <p>Un mural no es solo una imagen decorativa; funciona como un discurso visual capaz de transmitir memorias, denuncias, emociones, identidades o reflexiones colectivas. Su narrativa se organiza mediante símbolos, personajes, colores y composiciones que permiten contar una historia o representar una problemática desde una perspectiva artística y social.</p>
-
-        <h3>Idea central</h3>
-        <p>La idea central es el eje principal sobre el cual se desarrolla el mural. Representa el concepto más importante de la obra y guía las decisiones visuales, compositivas, simbólicas y cromáticas.</p>
-        <p>Puede surgir de una experiencia personal, una situación social, un hecho histórico, una identidad cultural o una reflexión colectiva. Tener una idea clara permite mantener coherencia entre imágenes, colores y elementos gráficos para que el mensaje final sea comprensible y significativo.</p>
-
-        <h3>Mensaje y temática</h3>
-        <p>El mensaje corresponde a aquello que el mural desea transmitir al público. La temática es el tema específico que aborda la obra. Por ejemplo, la temática puede ser el cuidado ambiental y el mensaje puede plantear que la naturaleza también guarda memoria de nuestras acciones.</p>
-        <p>Un mural puede trabajar temáticas como memoria histórica, diversidad cultural, cuidado ambiental, resistencia social, identidad juvenil o transformación comunitaria. El mensaje puede ser explícito o simbólico, pero debe generar una conexión emocional o reflexiva con quienes observan la obra.</p>
-
-        <h3>Investigación visual y referentes</h3>
-        <p>La investigación visual consiste en recopilar imágenes, artistas, estilos y referencias relacionadas con la temática del mural. Esta búsqueda permite ampliar ideas, identificar recursos gráficos y enriquecer la propuesta estética.</p>
-        <p>Los referentes pueden provenir del muralismo colombiano, el muralismo latinoamericano, el arte urbano, la fotografía, el cine, las culturas ancestrales o las expresiones visuales contemporáneas. Algunos referentes útiles para analizar son Diego Rivera, Omar Rayo, Banksy, Eduardo Kobra, Pablo Picasso y distintas experiencias de muralismo colombiano y latinoamericano.</p>
-
-        <h3>Bocetación inicial</h3>
-        <p>La bocetación inicial es el proceso de crear dibujos preliminares que permiten organizar las ideas antes de intervenir el muro. A través de los bocetos se prueban composiciones, distribuciones de personajes, relaciones de tamaño y posibilidades cromáticas.</p>
-        <p>Esta etapa funciona como un laboratorio visual donde se corrigen errores, se prueban soluciones y se define la estructura general del mural. Un buen boceto facilita la planificación técnica y da mayor claridad durante la ejecución final de la obra.</p>
-      `,
-      activities: [
+      "lessonSections": [
         {
-          id: "actividad-01-concepto-referentes-boceto",
-          title: "Idea central, referentes y bocetación inicial",
-          type: "mixed",
-          instructions:
-            "Define la idea central de tu mural, escribe cuál sería su mensaje y temática, busca mínimo tres referentes visuales relacionados con tu propuesta y realiza una bocetación inicial en hojas blancas tamaño carta. Puedes variar el formato, pero debe estar trabajado a escala de una hoja. Usa lápiz, trazos rápidos y deja las correcciones para una etapa posterior. Ten en cuenta la idea central y el mensaje que quieres comunicar.",
-          rubric: [
-            "Claridad de la idea central",
-            "Coherencia entre mensaje, temática y referentes",
-            "Exploración visual en la bocetación",
-            "Relación entre símbolos, composición e intención artística"
-          ]
+          "title": "¿Qué harás en este taller?",
+          "body": "Vas a crear un mural desde cero. Primero pensarás qué quieres comunicar, luego buscarás referentes, harás bocetos, organizarás la composición, elegirás colores, prepararás la superficie y finalmente pintarás tu mural."
+        },
+        {
+          "title": "Objetivo",
+          "body": "Diseñar y realizar una obra mural colectiva, entendiendo cada etapa del proceso: idea, mensaje, investigación visual, composición, color, materiales, traslado del boceto y pintura final."
+        },
+        {
+          "title": "Temas principales",
+          "body": "Trabajarás conceptualización y narrativa, composición visual, teoría del color, técnicas y materiales, producción colaborativa y lectura crítica del mural."
+        },
+        {
+          "title": "Antes de iniciar",
+          "body": "Lee esta presentación completa y revisa los materiales. El proceso se construye por etapas, así que no necesitas tener todo resuelto desde el primer día."
+        }
+      ],
+      "showMaterials": true,
+      "tasksTitle": "Antes de comenzar",
+      "tasksIntro": "Prepara lo necesario para trabajar con calma durante las sesiones.",
+      "tasks": [
+        "Lee la presentación del taller.",
+        "Revisa los temas que trabajarás durante el proceso.",
+        "Prepara los materiales que vas a usar.",
+        "Ten lista una superficie o pared pintada de blanco para el momento de intervención."
+      ],
+      "resourceLinks": [
+        {
+          "label": "Abrir guía completa en PDF",
+          "url": "./assets/guia/guia-muralismo.pdf"
         }
       ]
     },
     {
-      id: "sesion-02-composicion-visual",
-      order: 2,
-      title: "Composición visual y organización del espacio",
-      summary:
-        "Trabaja cómo organizar elementos dentro del mural para construir una imagen coherente, armónica y comunicativa.",
-      duration: "120 min",
-      isPublished: true,
-      videoUrl: "",
-      resourceLinks: [
+      "id": "sesion-01-conceptualizacion-narrativa",
+      "order": 1,
+      "title": "Conceptualización y narrativa del mural",
+      "summary": "Construye la idea central de tu mural, define el mensaje, revisa referentes y comienza tu boceto inicial.",
+      "duration": "Sesión 1",
+      "isPublished": true,
+      "visualResources": [
         {
-          label: "Teoría de composición visual en Scratch",
-          url: "#"
+          "src": "./assets/guia/imagenes/diego-rivera-alcatraces.jpg",
+          "alt": "Las flores de Alcatraz, mural de Diego Rivera.",
+          "caption": "Las flores de Alcatraz, mural de Diego Rivera."
+        },
+        {
+          "src": "./assets/guia/imagenes/omar-rayo-nubobilia.jpg",
+          "alt": "Nubobilia, mural de Omar Rayo en Bogotá.",
+          "caption": "Nubobilia, mural de Omar Rayo en Bogotá."
+        },
+        {
+          "src": "./assets/guia/imagenes/diego-rivera-retrato.jpg",
+          "alt": "Retrato de Diego Rivera como referente del muralismo latinoamericano.",
+          "caption": "Retrato de Diego Rivera como referente del muralismo latinoamericano."
+        },
+        {
+          "src": "./assets/guia/imagenes/banksy-columpio.jpg",
+          "alt": "La niña del columpio, Banksy.",
+          "caption": "La niña del columpio, Banksy."
+        },
+        {
+          "src": "./assets/guia/imagenes/eduardo-kobra-beso.jpg",
+          "alt": "El beso, Eduardo Kobra.",
+          "caption": "El beso, Eduardo Kobra."
+        },
+        {
+          "src": "./assets/guia/imagenes/guernica-picasso.jpg",
+          "alt": "La Guernica, Pablo Picasso.",
+          "caption": "La Guernica, Pablo Picasso."
+        },
+        {
+          "src": "./assets/guia/imagenes/mural-candelaria-bogota.jpg",
+          "alt": "Mural en La Candelaria, Bogotá.",
+          "caption": "Mural en La Candelaria, Bogotá."
         }
       ],
-      contentHtml: `
-        <h2>Composición visual y organización del espacio</h2>
-        <p>La composición visual es la manera en que se organizan todos los elementos dentro del mural para construir una imagen coherente, armónica y comunicativa. Define cómo interactúan figuras, colores, líneas y espacios dentro del formato mural.</p>
-        <p>Una buena organización del espacio permite dirigir la mirada del espectador, generar equilibrio y reforzar el mensaje de la obra. En los murales, la composición adquiere gran importancia por el tamaño del soporte y por la necesidad de mantener claridad visual desde diferentes distancias y ángulos de observación.</p>
-
-        <h3>Equilibrio visual</h3>
-        <p>El equilibrio visual se refiere a la distribución armónica de elementos, formas, colores, tamaños y espacios dentro de la composición. Busca estabilidad para evitar que una parte del mural se perciba más pesada o saturada que otra.</p>
-        <p>El equilibrio puede ser simétrico, cuando los elementos se organizan de manera similar a ambos lados de la composición, o asimétrico, cuando se usan contrastes y diferentes pesos visuales para generar dinamismo sin perder armonía.</p>
-
-        <h3>Jerarquías y puntos focales</h3>
-        <p>Las jerarquías visuales definen qué elementos captan primero la atención del espectador. A través del tamaño, color, iluminación, contraste o ubicación, algunos elementos adquieren mayor importancia dentro de la composición.</p>
-        <p>El punto focal es el área principal hacia donde se dirige inicialmente la mirada y suele contener el mensaje más significativo del mural. Organizar correctamente las jerarquías ayuda a construir una narrativa visual clara y evita que todos los elementos compitan entre sí.</p>
-
-        <h3>Ritmo y movimiento</h3>
-        <p>El ritmo visual se genera mediante la repetición de formas, líneas, colores o patrones que producen continuidad dentro de la obra. Este recurso permite crear sensación de movimiento y guiar la mirada del espectador a través del mural.</p>
-        <p>El movimiento visual puede ser dinámico o suave dependiendo de la dirección de las líneas, la posición de las figuras y la secuencia compositiva. En el muralismo, el ritmo conecta escenas o elementos y aporta fluidez a la composición general.</p>
-
-        <h3>Distribución de elementos en gran formato</h3>
-        <p>En un mural, la distribución de los elementos debe adaptarse al tamaño del espacio y a la distancia desde la cual serán observados. Trabajar en gran formato implica pensar en escala, proporción, legibilidad e impacto.</p>
-        <p>Los elementos principales suelen ubicarse en zonas estratégicas para facilitar la lectura visual, mientras que los espacios vacíos permiten respiración y equilibrio compositivo. Una buena distribución evita la saturación y permite que el mural conserve claridad y fuerza visual.</p>
-      `,
-      activities: [
+      "lessonSections": [
         {
-          id: "actividad-02-analisis-composicion",
-          title: "Análisis de composición y organización del espacio",
-          type: "mixed",
-          instructions:
-            "Analiza una obra mural, preferiblemente El lanzador de flores de Banksy, identificando equilibrio visual, jerarquías, puntos focales, ritmo, movimiento y distribución de elementos en gran formato. Luego aplica ese análisis a tu propio boceto: marca el punto focal principal, los elementos secundarios, la dirección de lectura visual, el tipo de equilibrio y las zonas de mayor peso visual.",
-          rubric: [
-            "Identificación clara de equilibrio visual",
-            "Reconocimiento de jerarquías y puntos focales",
-            "Comprensión del ritmo y movimiento visual",
-            "Aplicación del análisis al propio boceto",
-            "Organizacion clara del espacio mural"
-          ]
+          "title": "Conceptualización y narrativa",
+          "body": "La conceptualización consiste en construir la idea general que dará sentido a la obra. En esta etapa defines qué quieres comunicar, cuál será tu intención artística y cómo se verá la historia del mural."
+        },
+        {
+          "title": "Idea central",
+          "body": "La idea central es el eje principal del mural. Puede surgir de una experiencia personal, una situación social, un hecho histórico, una identidad cultural o una reflexión colectiva."
+        },
+        {
+          "title": "Mensaje y temática",
+          "body": "El mensaje es lo que quieres transmitir al público. La temática es el tema específico que aborda tu mural, por ejemplo memoria, diversidad, cuidado ambiental, identidad juvenil o transformación comunitaria."
+        },
+        {
+          "title": "Investigación visual y referentes",
+          "body": "Busca imágenes, artistas, estilos y referencias relacionadas con tu temática. Esto te ayuda a encontrar símbolos, colores, composiciones y formas de contar mejor tu idea."
+        },
+        {
+          "title": "Bocetación inicial",
+          "body": "Haz dibujos preliminares para organizar tus ideas antes de intervenir el muro. Usa trazos rápidos y prueba varias composiciones; las correcciones se harán después."
+        }
+      ],
+      "tasksTitle": "Tu tarea",
+      "tasksIntro": "Realiza esto en tu proceso creativo y llévalo para revisarlo durante la clase.",
+      "tasks": [
+        "Escribe cuál será la idea central de tu mural.",
+        "Responde cuál crees que es el mensaje y la temática de tu mural.",
+        "Revisa los referentes visuales propuestos.",
+        "Realiza la bocetación inicial en hojas blancas tamaño carta. Usa trazos rápidos; las correcciones vendrán después."
+      ],
+      "resourceLinks": [
+        {
+          "label": "Gran formato / muralismo en Colombia",
+          "url": "https://www.dmentalgraffitishop.com/gran-formato/"
+        },
+        {
+          "label": "Recurso mensaje y temática",
+          "url": "https://acortar.link/9j1P6c"
+        },
+        {
+          "label": "Tour de graffiti por Bogotá",
+          "url": "https://www.bogotraveltours.com/es/bogota/bogota-graffiti-tour-en-bicicleta/"
+        },
+        {
+          "label": "El graffiti en Bogotá",
+          "url": "https://culturarecreacionydeporte.gov.co/es/principal/noticias/el-grafiti-en-bogota-2024"
+        },
+        {
+          "label": "Murales de Banksy en Londres",
+          "url": "https://www.myartbroker.com/artist-banksy/guides/londons-top-12-banksy-murals"
         }
       ]
+    },
+    {
+      "id": "sesion-02-composicion-visual",
+      "order": 2,
+      "title": "Composición visual y organización del espacio",
+      "summary": "Aprende a organizar los elementos del mural para que la imagen tenga equilibrio, foco, ritmo, movimiento y claridad.",
+      "duration": "Sesión 2",
+      "isPublished": true,
+      "visualResources": [
+        {
+          "src": "./assets/guia/imagenes/banksy-lanzador-equilibrio.jpg",
+          "alt": "Análisis de equilibrio visual en El lanzador de flores, Banksy.",
+          "caption": "Análisis de equilibrio visual en El lanzador de flores, Banksy."
+        },
+        {
+          "src": "./assets/guia/imagenes/banksy-puntos-focales.jpg",
+          "alt": "Análisis de jerarquías y puntos focales en El lanzador de flores.",
+          "caption": "Análisis de jerarquías y puntos focales en El lanzador de flores."
+        },
+        {
+          "src": "./assets/guia/imagenes/banksy-ritmo-movimiento.jpg",
+          "alt": "Análisis de ritmo y movimiento visual.",
+          "caption": "Análisis de ritmo y movimiento visual."
+        },
+        {
+          "src": "./assets/guia/imagenes/banksy-distribucion-formato.jpg",
+          "alt": "Ejemplo de distribución de elementos en gran formato.",
+          "caption": "Ejemplo de distribución de elementos en gran formato."
+        }
+      ],
+      "lessonSections": [
+        {
+          "title": "Composición visual",
+          "body": "La composición visual es la manera en que organizas figuras, colores, líneas y espacios dentro del mural. Una buena composición dirige la mirada y ayuda a que el mensaje se entienda desde diferentes distancias."
+        },
+        {
+          "title": "Equilibrio visual",
+          "body": "El equilibrio visual consiste en distribuir formas, colores, tamaños y espacios para que una parte del mural no se sienta más pesada o saturada que otra."
+        },
+        {
+          "title": "Jerarquías y puntos focales",
+          "body": "Las jerarquías indican qué se mira primero, segundo y después. El punto focal es el área principal hacia donde se dirige la mirada y normalmente contiene el elemento más importante del mensaje."
+        },
+        {
+          "title": "Ritmo y movimiento",
+          "body": "El ritmo se crea con repetición de formas, líneas, colores o patrones. El movimiento guía la mirada del espectador a través del mural."
+        },
+        {
+          "title": "Distribución en gran formato",
+          "body": "En un mural debes pensar en escala, proporción y distancia de observación. Los elementos principales deben ubicarse en zonas estratégicas y los espacios vacíos también ayudan a que la imagen respire."
+        }
+      ],
+      "tasksTitle": "Tu tarea",
+      "tasksIntro": "Revisa tu boceto y ajústalo antes de llevarlo al muro.",
+      "tasks": [
+        "Observa cómo se analiza el mural El lanzador de flores de Banksy.",
+        "Revisa tu boceto y marca el equilibrio visual, los puntos focales, el ritmo y el movimiento.",
+        "Haz los cambios que necesites para que tu boceto funcione mejor en gran formato.",
+        "Recuerda la escala: 1 cm en la hoja equivale a 10 cm en la pared."
+      ],
+      "resourceLinks": [
+        {
+          "label": "Teoría de composición visual en Scratch",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "id": "sesion-03-teoria-del-color",
+      "order": 3,
+      "title": "Teoría del color aplicada al mural",
+      "summary": "Explora el círculo cromático, los colores primarios, secundarios y complementarios, la psicología del color y las armonías cromáticas.",
+      "duration": "Sesión 3",
+      "isPublished": true,
+      "visualResources": [
+        {
+          "src": "./assets/guia/imagenes/mural-color.jpg",
+          "alt": "Ejemplo de mural con uso expresivo del color.",
+          "caption": "Ejemplo de mural con uso expresivo del color."
+        },
+        {
+          "src": "./assets/guia/imagenes/circulo-cromatico.jpg",
+          "alt": "Círculo cromático para estudiar relaciones de color.",
+          "caption": "Círculo cromático para estudiar relaciones de color."
+        },
+        {
+          "src": "./assets/guia/imagenes/calidos-frios.jpg",
+          "alt": "Relación entre colores cálidos y fríos.",
+          "caption": "Relación entre colores cálidos y fríos."
+        },
+        {
+          "src": "./assets/guia/imagenes/psicologia-color.jpg",
+          "alt": "Tabla de psicología del color.",
+          "caption": "Tabla de psicología del color."
+        },
+        {
+          "src": "./assets/guia/imagenes/armonias-cromaticas.jpg",
+          "alt": "Tipos de armonías cromáticas.",
+          "caption": "Tipos de armonías cromáticas."
+        }
+      ],
+      "lessonSections": [
+        {
+          "title": "¿Para qué sirve el color en un mural?",
+          "body": "El color ayuda a comunicar emociones, crear atmósferas, dirigir la atención y reforzar el mensaje de tu composición. No se elige solo porque se ve bonito: cada color puede apoyar la historia que quieres contar."
+        },
+        {
+          "title": "Círculo cromático",
+          "body": "El círculo cromático organiza los colores según sus relaciones. Te permite identificar colores cálidos, fríos, complementarios y análogos para crear paletas con intención."
+        },
+        {
+          "title": "Colores primarios, secundarios y complementarios",
+          "body": "Los colores primarios son rojo, azul y amarillo. Al mezclarlos aparecen los secundarios: verde, naranja y violeta. Los complementarios están opuestos en el círculo cromático y crean contrastes fuertes."
+        },
+        {
+          "title": "Psicología del color",
+          "body": "La psicología del color estudia cómo los colores pueden transmitir emociones, sensaciones o ideas. En un mural, esto ayuda a reforzar el mensaje y la atmósfera."
+        },
+        {
+          "title": "Armonías cromáticas",
+          "body": "Las armonías son combinaciones de colores que generan equilibrio visual. Pueden ser análogas, monocromáticas, complementarias, triádicas y otras."
+        }
+      ],
+      "tasksTitle": "Tarea de color",
+      "tasksIntro": "Usa la guía para tomar decisiones de color de forma consciente.",
+      "tasks": [
+        "Revisa la idea central y el mensaje de tu mural.",
+        "Dibuja o completa un círculo cromático en una hoja.",
+        "Haz una tabla con tres columnas: color, emoción o idea que comunica, y dónde lo usarías en tu mural.",
+        "Responde: ¿qué sentimientos me evoca el boceto?, ¿qué colores puedo asociar con esa imagen?, ¿qué colores deberían predominar?, ¿con cuáles los puedo combinar?",
+        "En una hoja aparte, realiza escalas de color variando presión y capas para crear luces, sombras y volumen."
+      ],
+      "resourceLinks": []
+    },
+    {
+      "id": "sesion-04-tecnicas-materiales",
+      "order": 4,
+      "title": "Reconocimiento de materiales y preparación de superficie",
+      "summary": "Conoce pinturas, superficies, herramientas, transferencia del boceto, capas, texturas, acabados y cuidado del espacio.",
+      "duration": "Sesión 4",
+      "isPublished": true,
+      "visualResources": [
+        {
+          "src": "./assets/guia/imagenes/tipos-pintura.jpg",
+          "alt": "Tipos de pintura: acrílica, vinílica y esmalte.",
+          "caption": "Tipos de pintura: acrílica, vinílica y esmalte."
+        },
+        {
+          "src": "./assets/guia/imagenes/herramientas-pintura.jpg",
+          "alt": "Brochas, pinceles y herramientas de pintura.",
+          "caption": "Brochas, pinceles y herramientas de pintura."
+        },
+        {
+          "src": "./assets/guia/imagenes/rodillo.jpg",
+          "alt": "Rodillo para cubrir áreas grandes.",
+          "caption": "Rodillo para cubrir áreas grandes."
+        },
+        {
+          "src": "./assets/guia/imagenes/aerosol.jpg",
+          "alt": "Aerosol como recurso de pintura para muralismo.",
+          "caption": "Aerosol como recurso de pintura para muralismo."
+        },
+        {
+          "src": "./assets/guia/imagenes/dibujo-referencia.jpg",
+          "alt": "Referencia visual para el trabajo técnico del mural.",
+          "caption": "Referencia visual para el trabajo técnico del mural."
+        }
+      ],
+      "lessonSections": [
+        {
+          "title": "Reconocimiento de materiales",
+          "body": "En esta sesión vas a identificar pinturas, superficies y herramientas que puedes usar para pintar un mural: acrílicos, vinilos, esmaltes, aerosoles, brochas, rodillos y pinceles."
+        },
+        {
+          "title": "Preparación de superficie",
+          "body": "Antes de pintar, prepara tu superficie. Limpia el espacio, revisa que esté seco y pinta la superficie de blanco. Aplica las capas que creas necesarias hasta que el muro quede uniforme y listo para trabajar."
+        },
+        {
+          "title": "Uso de brochas, rodillos y aerosoles",
+          "body": "Las brochas sirven para detalles y líneas; los rodillos ayudan a cubrir zonas grandes; los aerosoles permiten degradados, texturas y trazos rápidos. Cada herramienta cambia el resultado visual."
+        },
+        {
+          "title": "Transferencia del boceto",
+          "body": "Para pasar el boceto al muro puedes usar cuadrícula o proyección. La idea es mantener las proporciones y la organización de la composición."
+        },
+        {
+          "title": "Capas, texturas y acabados",
+          "body": "Un mural se construye por capas: fondos, tonos claros, sombras, detalles y acabados. Las capas permiten corregir errores y crear profundidad."
+        },
+        {
+          "title": "Seguridad y cuidado del espacio",
+          "body": "Mantén el espacio limpio y organizado. Si usas aerosoles o productos fuertes, revisa la ventilación y usa protección adecuada."
+        }
+      ],
+      "tasksTitle": "Reconocimiento y preparación",
+      "tasksIntro": "Esta sesión es más informativa: revisa materiales y deja clara la preparación del muro.",
+      "tasks": [
+        "Identifica qué tipo de pintura usarás para tu mural.",
+        "Revisa qué herramientas necesitarás: brochas, rodillos, pinceles o aerosoles.",
+        "Prepara la superficie: límpiala, píntala de blanco y aplica las capas necesarias.",
+        "Piensa cómo vas a transferir el boceto al muro: cuadrícula o proyección.",
+        "Mantén el espacio de trabajo limpio, seguro y organizado."
+      ],
+      "resourceLinks": []
+    },
+    {
+      "id": "sesion-05-intervenir-espacio",
+      "order": 5,
+      "title": "¡Llegó la hora de intervenir el espacio!",
+      "summary": "Pasa tu boceto del papel al muro usando una retícula, cuidando la escala y las proporciones.",
+      "duration": "Sesión 5",
+      "isPublished": true,
+      "visualResources": [
+        {
+          "src": "./assets/guia/imagenes/reticula-banksy.jpg",
+          "alt": "Ejemplo de boceto con retícula.",
+          "caption": "Ejemplo de boceto con retícula."
+        },
+        {
+          "src": "./assets/guia/imagenes/reticula-hoja.jpg",
+          "alt": "Ejemplo de cuadro de 1 cm x 1 cm en la hoja.",
+          "caption": "Ejemplo de cuadro de 1 cm x 1 cm en la hoja."
+        },
+        {
+          "src": "./assets/guia/imagenes/reticula-pared.jpg",
+          "alt": "Ejemplo de retícula ampliada en la pared.",
+          "caption": "Ejemplo de retícula ampliada en la pared."
+        }
+      ],
+      "lessonSections": [
+        {
+          "title": "¿Qué vas a hacer en esta sesión?",
+          "body": "Vas a pasar tu boceto pequeño a la pared. Para hacerlo con proporción, usarás una retícula: una cuadrícula en tu hoja y otra más grande en el muro."
+        },
+        {
+          "title": "Escala 1 a 10",
+          "body": "La escala 1 a 10 significa que 1 cm en tu hoja equivale a 10 cm en la pared. Si un cuadro de tu boceto mide 1 cm x 1 cm, en el muro ese mismo cuadro será de 10 cm x 10 cm."
+        },
+        {
+          "title": "Antes de dibujar en la pared",
+          "body": "Mide con calma, marca la retícula y usa lápiz o pintura gris muy clara para pasar el boceto. Si usas pintura gris, ten pintura blanca cerca para corregir errores."
+        }
+      ],
+      "tasksTitle": "Trabajo en el muro",
+      "tasksIntro": "Sigue estos pasos para pasar tu boceto a gran formato.",
+      "tasks": [
+        "Crea en tu boceto una cuadrícula de 1 cm x 1 cm. No hagas márgenes o bordes adicionales: el borde será el borde de la hoja.",
+        "Realiza la retícula en la pared. Recuerda la escala 1 a 10: cada cuadro de 1 cm en la hoja será de 10 cm en la pared.",
+        "Mide bien. Usa metro y lápiz para hacer marcas, o cinta de enmascarar delgada para armar la retícula grande.",
+        "Realiza el bocetaje en la pared guiándote por la retícula de tu boceto pequeño.",
+        "Usa lápiz o un pincel con pintura gris muy clara. Si usas pintura gris, ten pintura blanca para tapar errores."
+      ],
+      "resourceLinks": []
+    },
+    {
+      "id": "sesion-06-pintar-mural",
+      "order": 6,
+      "title": "A pintar tu mural",
+      "summary": "Organiza tus colores, trabaja por capas, revisa luces y sombras, corrige detalles y termina tu mural.",
+      "duration": "Sesión 6",
+      "isPublished": true,
+      "visualResources": [],
+      "lessonSections": [
+        {
+          "title": "Última etapa del proceso",
+          "body": "En esta sesión verás el resultado de todo lo trabajado: idea, boceto, composición, color, materiales y preparación del muro. Ahora pintarás con calma, por capas y corrigiendo cuando sea necesario."
+        },
+        {
+          "title": "Trabajo por capas",
+          "body": "Empieza por fondos y tonos claros. Luego avanza hacia sombras, detalles y correcciones. Esperar a que seque cada capa ayuda a que el mural quede más limpio y con mejor acabado."
+        }
+      ],
+      "tasksTitle": "10 pasos para pintar tu mural",
+      "tasksIntro": "Sigue las instrucciones en orden para cerrar tu proceso.",
+      "tasks": [
+        "A partir de las escalas de color creadas en la sesión 3 y utilizando las pinturas o aerosoles que vayas a utilizar, organízalos por orden de uso.",
+        "Si usas aerosoles, recuerda que no se pueden modificar: aplica el color con calma y dedicación.",
+        "Si usas pinturas, viértelas en recipientes. En otros recipientes realiza las graduaciones con blanco o negro para aclarar u oscurecer y llegar a las gamas deseadas.",
+        "Recuerda quitar la cinta si la usaste.",
+        "Aplica el color de fondo y deja que sobresalga por la imagen. Espera a que seque.",
+        "Aplica la primera capa de tonos claros y luces a la forma. Espera a que seque.",
+        "Aplica la segunda capa al fondo, teniendo en cuenta luces, sombras y gamas más oscuras. Espera a que seque.",
+        "Aplica la segunda capa a la imagen, teniendo en cuenta luces, sombras y gamas más oscuras.",
+        "Repite las capas las veces que sea necesario.",
+        "Cuando todo esté seco, da unos pasos hacia atrás y revisa tu mural. Si encuentras problemas de luces y sombras, regresa y haz las correcciones necesarias."
+      ],
+      "resourceLinks": []
     }
   ]
 };
